@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Game begins</title>
+				<script src="../lib/score.js"></script>
+		<link href='http://fonts.googleapis.com/css?family=Lato:100,300,400' rel='stylesheet' type='text/css'>
+		<link href="font/font_icons8.css" rel="stylesheet">
+		<style>
+			body { 
+				background-color: powderblue;
+			}
+			#begin { 
+				color: white; 
+				font-weight: bold; 
+				font-size: 20px 
+			}
+			p.heading{
+				font-family: 'Lato', sans-serif;
+				text-align: center;
+				font-size: 16px;
+				margin:0px;
+				padding:0px;
+			}
+			p.instructions {
+				font-size: 16px;
+				font-weight: bold; 
+				margin:5px;
+				padding:0px;
+			}
+			#page1 {
+				float: left;
+			}
+			#page{
+				float: right;
+				display: inline-block;
+				width: 300px;
+				padding: 10px;
+			}
+			h1{
+				font-weight: 100;
+				font-size: 4.5em;
+				margin-bottom:0;
+				margin-top:0.5em;
+			}
+			h2{
+				font-weight: 300;
+				font-size: 0.85em;
+				color: #999;
+				margin-bottom:4em;
+
+			}
+			#scorecard{
+				text-align: left;
+				padding:20px;
+				background: #444;
+				color:#FFF;
+				margin-bottom:10px;
+			}
+			#status{
+				transition:opacity .2s ease-in-out;
+				border-radius: 10px;
+				opacity:0;
+				height:40px;
+				height:40px;
+				line-height: 40px;
+				background:#fcf8e3;
+			}
+			#status.show{
+				opacity:1;
+			}
+			i{
+				font-size: .75em;
+				color: #888;
+			}
+			a{
+				color:#3D9970;
+			}
+			.score{
+				clear: both;
+				margin-bottom:10px;
+				font-size: 0.85em;
+			}
+			#score{
+				font-size: 1em;
+				width:140px;
+				height:40px;
+				line-height: 40px;
+				color: #999;
+				background: #EEE;
+				display: inline-block;
+				border-radius: 20px;
+				margin-bottom: 10px;
+			}
+			h3{
+				margin:0;
+				padding:0;
+			}
+			#icon{
+				background: #FFF;
+				width:100px;
+				height:100px;
+				color:black;
+				font-size: 4em;
+				text-align: center;
+				line-height: 100px;
+				float:left;
+				margin-right:10px;
+				margin-bottom:10px;
+			}
+			input, progress{
+				width:100%;
+			}
+			progress[value] {
+				-webkit-appearance: none;
+				appearance: none;
+				height:20px;
+			}         
+			progress[value]::-webkit-progress-bar {
+				background-color: #666;
+				border-radius: 0px;
+				overflow: hidden;
+			} 
+			progress[value]::-webkit-progress-value {
+				background: #3D9970;
+				border-radius: 0px; 
+			}
+			
+		</style>
+
+	</head>
+	<body>
+		<p id="begin" class="heading" >Lets Begin!</p>
+		<p class="heading" >The game is pretty simple , Just follow the instructions , keep ticking as you go and by the end of it You'll be part of our family! </p><br/>
+
+		<section id="page1">
+			<p id="begin" >Level 1: Noob</p>
+			<div id="one"><p class="instructions"><img src="../images/tick.png" style="vertical-align:middle" width="30px" onclick="updateScoreValue()" id="tick1" /> Get Info and Email from Aju.</p></div>
+		</section>
+
+		<aside id="page">
+			<div id='score'></div>
+			<input type="hidden" name="scoreValue" id="scoreValue" value="0">
+			<!-- <input id="slider" value="0" oninput="updateScore(this.value)" /> -->
+			<br/><br/>
+
+			<div id='scorecard'>
+
+				<div id='icon'></div>
+				<!-- <h3>John Doe</h3> -->
+				Level: {level} <br/>
+				Status: {levelname}<br/>
+				<i>'{quote}'</i>
+
+				<div class='score'>
+					Score: {score} <br/>
+					Level score: {levelscore}/{leveltotal} <br/>
+					Total progress: {totalprogress}% <br/>
+				</div>
+				<progress max="100" value="{levelprogress}"></progress>
+				
+			</div>
+			<br/>
+			<!-- <a href="https://medium.com/@mulhoon/easy-gamification-in-javascript-with-levelup-js-8ff3b67e7706">Read more</a> &nbsp;&middot;&nbsp;
+			<a href="https://github.com/mulhoon/score.js">Download on Github</a> -->
+			<br/><br/><br/>
+		<!-- </div> -->
+		</aside>
+	</body>
+
+		<script>
+
+			// setup
+			var score = new Score();
+
+			var scorecard = document.getElementById("scorecard");
+			// var slider = document.getElementById("slider");
+			var template = scorecard.innerHTML;
+
+			function updateScoreValue() { 
+				var score 	= document.getElementById("scoreValue").value;
+				score 		= parseInt(score)+10;
+				document.getElementById("scoreValue").value=score;
+				var d1 		= document.getElementById('one');
+				if (document.getElementById("tick1").src === "http://localhost/images/tick.png") 
+        		{
+            		document.getElementById("tick1").src = "../images/tick4.png";
+            		document.getElementById('tick1').onclick = null;
+        		}
+        		else if (document.getElementById("tick2").src === "http://localhost/images/tick.png") 
+        		{
+            		document.getElementById("tick2").src = "../images/tick4.png";
+            		document.getElementById('tick2').onclick = null;
+        		} else if (document.getElementById("tick3").src === "http://localhost/images/tick.png") 
+        		{
+            		document.getElementById("tick3").src = "../images/tick4.png";
+            		document.getElementById('tick3').onclick = null;
+        		}
+				if(score==10){
+					d1.insertAdjacentHTML('beforeend', '<p class="instructions"><img src="../images/tick.png" style="vertical-align:middle" width="30px" onclick="updateScoreValue()" id="tick2"/> Send Email to Shree.</p>');
+				}
+				if(score==20){
+					d1.insertAdjacentHTML('beforeend', '<p class="instructions"><img src="../images/tick.png" style="vertical-align:middle" width="30px" onclick="updateScoreValue()" id="tick3"/> Shree replies with congratulations for passing first hurdle, slack link included in the email</p>');
+				}
+				if(score==30){
+					d1.insertAdjacentHTML('beforeend', '<p id="begin" >Level 2: Slack Certified</p><div id="two"><p class="instructions"><img src="../images/tick.png" style="vertical-align:middle" width="30px" onclick="updateScoreValue2()" id="tick4" /> Create account.</p></div>');
+				}
+				updateScore();
+			}
+
+			function updateScoreValue2() { 
+				var score 	= document.getElementById("scoreValue").value;
+				score 		= parseInt(score)+20;
+				document.getElementById("scoreValue").value=score;
+				var d1 		= document.getElementById('two');
+				if (document.getElementById("tick4").src === "http://localhost/images/tick.png") 
+        		{
+            		document.getElementById("tick4").src = "../images/tick4.png";
+            		document.getElementById('tick4').onclick = null;
+        		}
+        		else if (document.getElementById("tick5").src === "http://localhost/images/tick.png") 
+        		{
+            		document.getElementById("tick5").src = "../images/tick4.png";
+            		document.getElementById('tick5').onclick = null;
+        		} 
+        		else if (document.getElementById("tick6").src === "http://localhost/images/tick.png") 
+        		{
+            		document.getElementById("tick6").src = "../images/tick4.png";
+            		document.getElementById('tick6').onclick = null;
+        		}
+        		else if (document.getElementById("tick7").src === "http://localhost/images/tick.png") 
+        		{
+            		document.getElementById("tick7").src = "../images/tick4.png";
+            		document.getElementById('tick7').onclick = null;
+        		}
+        		else if (document.getElementById("tick8").src === "http://localhost/images/tick.png") 
+        		{
+            		document.getElementById("tick8").src = "../images/tick4.png";
+            		document.getElementById('tick8').onclick = null;
+        		}
+				if(score==50){
+					d1.insertAdjacentHTML('beforeend', '<p class="instructions"><img src="../images/tick.png" style="vertical-align:middle" width="30px" onclick="updateScoreValue2()" id="tick5"/> Add profile picture.</p>');
+				}
+				if(score==70){
+					d1.insertAdjacentHTML('beforeend', '<p class="instructions"><img src="../images/tick.png" style="vertical-align:middle" width="30px" onclick="updateScoreValue2()" id="tick6"/> Get the app</p>');
+				}
+				if(score==90){
+					d1.insertAdjacentHTML('beforeend', '<p class="instructions"><img src="../images/tick.png" style="vertical-align:middle" width="30px" onclick="updateScoreValue2()" id="tick7"/>Send message to any employee to get invited to dubai_office (other than Aju and Shree)</p>');
+				}
+				if(score==110){
+					d1.insertAdjacentHTML('beforeend', '<p class="instructions"><img src="../images/tick.png" style="vertical-align:middle" width="30px" onclick="updateScoreValue2()" id="tick8"/>Get pre-written message congratulations and link to Trello and request to meet with <br> department person to get introduced to Trello</p>');
+				}
+				if(score==130){
+					d1.insertAdjacentHTML('beforeend', '<p id="begin" >Level 3: Trello Certified</p><div id="three"><p class="instructions"><img src="../images/tick.png" style="vertical-align:middle" width="30px" onclick="updateScoreValue3()" id="tick9" /> Sign up.</p></div>');
+				}
+				updateScore();
+			}
+			function updateScore(){
+				// Set score
+				var v = document.getElementById("scoreValue").value;
+				score.set(v);
+				updateCard();
+			};
+
+			function updateCard(){
+				var s = template;
+
+				// Get scorecard
+				var d = score.scorecard();
+				// populate template
+				for(var p in d){
+					s=s.replace(new RegExp('{'+p+'}','g'), d[p]);
+				}
+
+				// slider.value = d.score;
+
+				scorecard.innerHTML = s;
+				scorecard.className = d.levelname;
+				document.getElementById("score").innerHTML = 'score: '+d.score;
+				document.getElementById("icon").className = 'icons8-' + d.status;
+			};
+			updateScore();
+			updateCard();
+
+
+		</script>
+</html>
